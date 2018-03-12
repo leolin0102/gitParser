@@ -15,9 +15,11 @@ def parse_log():
         if result is not None:
             if log_item is not None:
                 items.append(log_item)
-            log_item = {}
+            log_item = {'commit': result.group(1)}
         else:
             print(add_commit_file(log_item, parse_commit_file(l)))
+
+    print(items)
 
 
 def add_commit_id(change_log_item, commit_id):
@@ -25,7 +27,7 @@ def add_commit_id(change_log_item, commit_id):
 
 
 def parse_commit(line):
-    result = re.match("commit .*", line)
+    result = re.match("commit (.*)", line)
     return result
 
 
@@ -42,8 +44,7 @@ def add_commit_file(item, file_path):
         return
     result = re.match("(.*)/(.*.swift)", file_path)
     if result is not None:
-        print("aaaa" + result.group(2))
-
+        return file_path
 
 parse_log()
 
