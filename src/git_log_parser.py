@@ -8,27 +8,36 @@ def git_log():
 
 def parse_log():
     items = []
+    log_item = None
     logs = git_log().splitlines(True)
     for l in logs:
-        result = parse_commit(l, None)
+        result = parse_commit(l)
         if result is not None:
-            pass
+            if log_item is not None:
+                items.append(log_item)
+            log_item = {}
         else:
-            pass
+            print(parse_commit_file(l))
 
 
 def add_commit_id(change_log_item, commit_id):
     pass
 
 
-def parse_commit(line, detailParser):
+def parse_commit(line):
     result = re.match("commit .*", line)
     return result
 
 
 def parse_commit_file(line):
-    pass
+    result = re.match("(.*) \| \d* .*", line)
+    if result is not None:
+        return result.group(1)
+    else:
+        return None
 
 
+def add_commit_file(item, file_path):
+    item['files']
 parse_log()
 
